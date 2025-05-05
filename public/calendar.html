@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title> <!-- Actualizado title -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/calendar.css"> <!-- Estilos específicos -->
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+
+    <!-- Estilos de FullCalendar (integrados en el JS global, pero podrías necesitar CSS específico) -->
+
+    <!-- Favicon u otros metas -->
+
+    <style>
+        /* Estilos para el contenedor y el overlay de carga */
+        #calendar-container {
+            min-height: 600px;
+            position: relative;
+        }
+
+        #calendar {
+            height: 100%;
+            /* O un valor fijo si prefieres */
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #555;
+            z-index: 10;
+            border-radius: var(--border-radius);
+            /* Heredar borde si aplica */
+        }
+
+        /* Asegurar visibilidad del calendario */
+        .fc {
+            visibility: visible !important;
+            /* Sobreescribir si algún estilo lo oculta */
+        }
+    </style>
+
+    <!-- Scripts esenciales diferidos en HEAD (alternativa a ponerlos al final) -->
+    <!-- Librerías externas -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js' defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- SDKs Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+
+
+</head>
+
+<body>
+<header>
+    <h1 style="margin: 0;">
+        <a href="index.html" style="
+          display: inline-flex; 
+          align-items: center; 
+          background-color: #007BFF; 
+          color: white; 
+          font-weight: 600; 
+          text-decoration: none; 
+          padding: 8px 16px; 
+          border-radius: 6px; 
+          font-size: 1.2em;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          transition: background-color 0.3s;
+        " onmouseover="this.style.backgroundColor='#0056b3';" onmouseout="this.style.backgroundColor='#007BFF';">
+            <i class="fas fa-arrow-left" style="margin-right: 8px; font-size: 1em;"></i>
+            Regresar Inicio
+        </a>
+    </h1>
+
+    <!-- Botón Hamburguesa (visible solo en móvil) -->
+    <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+    </button>
+
+    <!-- Contenedor de Navegación Principal -->
+    <nav id="main-navigation">
+        <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+        <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+        <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+        <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+        
+    </nav>
+</header>
+
+    <main>
+        <section class="card">
+            <h2>Vista del Calendario</h2>
+            <div id="calendar-container">
+                <!-- Indicador de carga -->
+                <div id="loading-indicator" class="loading-overlay" style="display: none;">Cargando citas...</div>
+                <!-- Contenedor del calendario -->
+                <div id="calendar"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Pie de página si tienes -->
+    </footer>
+
+    <!-- Scripts propios al final del body -->
+    <!-- 1. Configuración de Firebase (Crea window.db) -->
+    <script src="js/firebase-config.js" defer></script>
+    <!-- 2. Lógica de Autenticación/Logout (si la usas) -->
+    <script src="js/auth.js" defer></script> <!-- Asegúrate que este archivo exista y haga lo que necesites -->
+    <!-- 3. Lógica específica del calendario (Usa window.db) -->
+    <script src="js/calendar-firebase.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+
+</body>
+
+</html>

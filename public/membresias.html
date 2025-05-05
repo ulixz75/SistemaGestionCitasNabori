@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMind Rx - Membresías</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-text span:nth-child(1) {
+            color: #000000;
+        }
+
+        /* Fit - Negro */
+        .logo-text span:nth-child(2) {
+            color: #FF4444;
+        }
+
+        /* Mind - Rojo */
+        .logo-text span:nth-child(3) {
+            color: #A3E635;
+        }
+
+        /* Rx - Lima */
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px 0;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+            margin: 20px 0;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list i {
+            color: #60a5fa;
+            margin-right: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #60a5fa;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .features-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        footer {
+            background: #1e293b;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .logo-text {
+                font-size: 2rem;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-text">
+                <span>Fit</span>
+                <span>Mind</span>
+                <span>Rx</span>
+            </div>
+            <h1>Transforma tu mente, mejora tu vida</h1>
+            <p>Elige el plan que mejor se adapte a tus necesidades</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Plan Básico</h3>
+                <div class="price">$29<span>/mes</span></div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i>Acceso a contenido básico</li>
+                    <li><i class="fas fa-check"></i>3 sesiones guiadas/mes</li>
+                    <li><i class="fas fa-check"></i>Soporte por email</li>
+                </ul>
+                <a href="#" class="btn">Elegir Plan</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Plan Pro</h3>
+                <div class="price">$59<span>/mes</span></div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i>Contenido premium completo</li>
+                    <li><i class="fas fa-check"></i>10 sesiones guiadas/mes</li>
+                    <li><i class="fas fa-check"></i>Soporte prioritario</li>
+                    <li><i class="fas fa-check"></i>Sesiones grupales</li>
+                </ul>
+                <a href="#" class="btn">Elegir Plan</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Plan Premium</h3>
+                <div class="price">$99<span>/mes</span></div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i>Acceso completo</li>
+                    <li><i class="fas fa-check"></i>Sesiones ilimitadas</li>
+                    <li><i class="fas fa-check"></i>Soporte 24/7</li>
+                    <li><i class="fas fa-check"></i>Coaching personal</li>
+                    <li><i class="fas fa-check"></i>Evaluaciones mensuales</li>
+                </ul>
+                <a href="#" class="btn">Elegir Plan</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Beneficios Exclusivos</h2>
+            <!-- Agregar más características aquí -->
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 FitMind Rx. Todos los derechos reservados.</p>
+            <p>contacto@fitmindrx.com | Tel: +1 234 567 890</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+                alert('Redirigiendo al proceso de pago...');
+            });
+        });
+    </script>
+</body>
+
+</html>

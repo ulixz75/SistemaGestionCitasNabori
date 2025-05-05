@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especialistas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- Los SDKs de Firebase se cargarán al final del body -->
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+</head>
+
+<body>
+    <header>
+<h1 style="margin: 0;">
+    <a href="index.html" style="
+      display: inline-flex; 
+      align-items: center; 
+      background-color: #007BFF; 
+      color: white; 
+      font-weight: 600; 
+      text-decoration: none; 
+      padding: 8px 16px; 
+      border-radius: 6px; 
+      font-size: 1.2em;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s;
+    " onmouseover="this.style.backgroundColor='#0056b3';" onmouseout="this.style.backgroundColor='#007BFF';">
+        <i class="fas fa-arrow-left" style="margin-right: 8px; font-size: 1em;"></i>
+        Regresar Inicio
+    </a>
+</h1>
+
+
+
+
+
+
+
+        <!-- Botón Hamburguesa (visible solo en móvil) -->
+        <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+        </button>
+    
+        <!-- Contenedor de Navegación Principal -->
+        <nav id="main-navigation">
+            <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+            <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+            <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+            <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+            
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-section card">
+            <h2 id="form-title">Agregar Especialista</h2>
+            <form id="specialist-form">
+                <input type="hidden" id="specialist-id"> <!-- Para editar -->
+
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" placeholder="Nombre del Especialista" required>
+                </div>
+                <div class="form-group">
+                    <label for="specialty">Especialidad:</label>
+                    <input type="text" id="specialty" placeholder="Ej: Psicólogo, Terapeuta" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono:</label>
+                    <input type="tel" id="phone" placeholder="Ej: +1234567890">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="especialista@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección:</label>
+                    <input type="text" id="address" placeholder="Dirección del consultorio/oficina">
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Fecha de Comienzo:</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div class="form-group">
+                    <label for="hourly-rate">Tarifa por Hora (USD):</label>
+                    <input type="number" step="0.01" id="hourly-rate" placeholder="Ej: 80.00">
+                </div>
+                <div class="form-group">
+                    <label for="services-offered">Servicios Ofrecidos (Descripción):</label>
+                    <textarea id="services-offered" placeholder="Describe brevemente los servicios"></textarea>
+                </div>
+
+                            <!-- Nueva Sección de Disponibilidad Detallada -->
+                            <fieldset class="form-group availability-details">
+                                <legend>Disponibilidad Detallada (Formato 24h, ej: 08:00, 17:30)</legend>
+                                <!-- Lunes -->
+                                <div class="day-availability">
+                                    <label>Lunes:</label>
+                                    <input type="time" id="avail-lunes-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-lunes-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                                <!-- Martes -->
+                                <div class="day-availability">
+                                    <label>Martes:</label>
+                                    <input type="time" id="avail-martes-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-martes-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                                <!-- Miércoles -->
+                                <div class="day-availability">
+                                    <label>Miércoles:</label>
+                                    <input type="time" id="avail-miercoles-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-miercoles-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                                <!-- Jueves -->
+                                <div class="day-availability">
+                                    <label>Jueves:</label>
+                                    <input type="time" id="avail-jueves-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-jueves-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                                <!-- Viernes -->
+                                <div class="day-availability">
+                                    <label>Viernes:</label>
+                                    <input type="time" id="avail-viernes-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-viernes-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                                <!-- Sábado -->
+                                <div class="day-availability">
+                                    <label>Sábado:</label>
+                                    <input type="time" id="avail-sabado-inicio" min="08:00" max="20:00">
+                                    <span> - </span>
+                                    <input type="time" id="avail-sabado-fin" min="08:00" max="20:00">
+                                    <small>(Dejar vacío si no está disponible)</small>
+                                </div>
+                            </fieldset>
+                            <!-- Fin Nueva Sección -->
+
+                <div class="form-actions">
+                    <button type="submit" id="save-button" class="button-primary">Guardar</button>
+                    <button type="button" id="cancel-button" class="button-secondary" style="display: none;">Cancelar
+                        Edición</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="table-section card">
+            <h2>Lista de Especialistas</h2>
+            <div class="table-container">
+                <table id="specialists-table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Tarifa/hr</th>
+                            <th>Disponibilidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se cargarán aquí -->
+                        <tr>
+                            <td colspan="8">Cargando especialistas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Pie de página -->
+    </footer>
+
+    <!-- ========= SCRIPTS AL FINAL DEL BODY (ORDEN IMPORTANTE) ========= -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <!-- Carga el nuevo script para especialistas -->
+    <script src="js/specialists-firebase.js" defer></script>
+    <!-- Elimina la referencia al antiguo specialists.js -->
+    <!-- <script src="js/specialists.js" defer></script> -->
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+
+</body>
+
+</html>

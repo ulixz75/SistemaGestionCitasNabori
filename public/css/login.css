@@ -1,0 +1,50 @@
+/* css/login.css */
+
+body.login-page { /* Clase opcional para aplicar solo a la página de login */
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     background-color: var(--background-color); /* Hereda de styles.css */
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px; /* Limitar ancho */
+    margin: 20px; /* Espacio en pantallas pequeñas */
+    padding: 30px;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center; /* Centrar h2 y botón si no ocupa todo */
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: var(--primary-dark); /* Hereda de styles.css */
+    border-bottom: none; /* Quitar borde si no se desea */
+}
+
+.login-container .form-group {
+    text-align: left; /* Alinear labels a la izquierda */
+    margin-bottom: 20px;
+}
+
+.login-container .form-group label {
+     font-size: 0.95em;
+     margin-bottom: 8px;
+}
+
+.login-container input {
+    /* Hereda estilos de styles.css */
+}
+
+.login-container button[type="submit"] {
+    width: 100%; /* Ocupar todo el ancho */
+    padding: 12px; /* Botón más grande */
+    margin-top: 10px; /* Espacio sobre el botón */
+    /* Hereda estilos de .button-primary */
+}
+
+/* No se necesita .error aquí, usamos Swal */

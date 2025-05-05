@@ -1,0 +1,705 @@
+/* css/styles.css - REVERTED VERSION */
+
+/* --- Reset Básico y Variables --- */
+:root {
+    /* Paleta de colores modernizada */
+    --primary-color: #4285F4; /* Azul Google más moderno */
+    --primary-dark: #3367D6;
+    --primary-light: #D2E3FC;
+    --secondary-color: #FBBC05; /* Amarillo Google */
+    --accent-color: #34A853; /* Verde Google */
+    --red-accent: #EA4335; /* Rojo Google */
+    --text-color: #202124;
+    --text-secondary: #5f6368;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --border-color: #dadce0;
+    --error-color: #d93025;
+    --success-color: #188038;
+    --font-family: 'Poppins', sans-serif; /* Changed Font */
+    --border-radius: 8px;
+    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Header y Navegación --- */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    position: sticky; /* Keep header visible */
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    display: flex; /* Use flex to align button within h1 */
+    align-items: center;
+}
+
+/* Regresar Inicio Button Specific Style - Integrated */
+header h1 a[href="index.html"] { /* More specific selector */
+     display: inline-flex !important;
+     align-items: center !important;
+     background-color: #007BFF !important; /* Match inline style */
+     color: white !important;
+     font-weight: 600 !important;
+     text-decoration: none !important;
+     padding: 8px 16px !important;
+     border-radius: 6px !important;
+     font-size: 0.7em !important; /* Adjusted relative to h1 parent */
+     box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+     transition: background-color 0.3s !important;
+     line-height: normal; /* Ensure proper line height */
+     vertical-align: middle; /* Align with h1 text */
+     margin-right: 15px; /* Optional space after button */
+}
+header h1 a[href="index.html"]:hover {
+    background-color: #0056b3 !important; /* Match inline style */
+}
+header h1 a[href="index.html"] i {
+    margin-right: 8px !important;
+    font-size: 1em !important; /* Icon size relative to button text */
+}
+/* End Regresar Inicio Button Style */
+
+
+/* Main Navigation Container */
+header nav#main-navigation {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Navigation Links and Buttons */
+header nav#main-navigation a,
+header nav#main-navigation button { /* Added #main-navigation for specificity */
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    font-size: 0.95em;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex; /* Ensure icons align */
+    align-items: center; /* Ensure icons align */
+    gap: 8px; /* Space between icon and text */
+}
+
+header nav#main-navigation a::after,
+header nav#main-navigation button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: white;
+    transition: all var(--transition-speed) ease;
+    transform: translateX(-50%);
+}
+
+header nav#main-navigation a:hover::after,
+header nav#main-navigation button:hover::after {
+    width: 80%;
+}
+
+header nav#main-navigation a:hover,
+header nav#main-navigation button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Optional Secondary Button Style */
+header nav#main-navigation a.button-secondary,
+header nav#main-navigation button.button-secondary {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+/* Logout Button Style */
+header nav#main-navigation button#logout-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+}
+
+header nav#main-navigation button#logout-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- Contenido Principal --- */
+main {
+    flex: 1;
+    padding: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+section {
+    margin-bottom: 35px;
+    transition: transform var(--transition-speed) ease;
+}
+
+section.card {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+}
+
+section.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+    font-weight: 500;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+/* --- Formularios --- */
+.form-section h2 {
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="password"],
+.form-group input[type="date"], /* Added date */
+.form-group input[type="time"], /* Added time */
+.form-group input[type="datetime-local"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    transition: all var(--transition-speed) ease;
+    background-color: #f8f9fa; /* Light background for inputs */
+}
+
+/* Improve appearance of selects */
+.form-group select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Grey arrow */
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px 10px;
+    padding-right: 40px; /* Make space for arrow */
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background-color: white;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap; /* Allow buttons to wrap */
+}
+
+/* --- Estilos para Fieldsets --- */
+fieldset {
+    border: 1px solid var(--border-color);
+    padding: 20px 25px; /* More horizontal padding */
+    border-radius: var(--border-radius);
+    margin-bottom: 25px; /* Space between fieldsets */
+    background-color: #fff; /* Optional: background for fieldset */
+}
+
+fieldset legend {
+    font-weight: 600;
+    padding: 0 10px;
+    color: var(--primary-dark);
+    font-size: 1.1em;
+    margin-bottom: 15px; /* Space below legend */
+    background-color: white; /* Ensure legend background matches fieldset */
+}
+
+/* --- Botones --- */
+button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px; /* Botones más redondeados */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.2; /* Prevent text jumping */
+}
+
+button:disabled {
+    background-color: #e0e0e0 !important;
+    color: #9e9e9e !important;
+    cursor: not-allowed;
+    box-shadow: none !important; /* Remove shadow when disabled */
+    transform: none !important; /* Prevent transform when disabled */
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.button-primary:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.3);
+    transform: translateY(-2px);
+}
+
+.button-secondary {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.button-secondary:hover:not(:disabled) {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.button-edit {
+    background-color: var(--accent-color);
+    color: white;
+    margin-right: 5px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.button-edit:hover:not(:disabled) {
+    background-color: #2d9249;
+    box-shadow: 0 2px 8px rgba(52, 168, 83, 0.3);
+}
+
+.button-delete {
+    background-color: var(--red-accent);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.button-delete:hover:not(:disabled) {
+    background-color: #d32f2f;
+    box-shadow: 0 2px 8px rgba(234, 67, 53, 0.3);
+}
+
+/* --- Tablas --- */
+.table-section {
+    overflow-x: auto; /* Enable horizontal scroll on the section if table overflows */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background-color: white; /* Ensure background for the rounded corners */
+    padding: 0; /* Remove padding from section if table is inside */
+    margin-bottom: 30px; /* Ensure space below table section */
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scroll on the container */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* Reset margin if inside .table-section */
+}
+
+table th,
+table td {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent text wrapping by default */
+}
+
+/* Allow specific columns to wrap if needed */
+table td[data-label="Descripción"],
+table td[data-label="Notas"],
+table td[data-label="Servicios Contratados"], /* Adjusted name */
+table td[data-label="Disponibilidad"] /* Add others as needed */
+{
+    white-space: normal;
+}
+
+
+table th {
+    background-color: #f1f3f4;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    position: sticky; /* Make headers sticky */
+    top: 0; /* Stick to the top of the container */
+    z-index: 10; /* Ensure headers are above rows */
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tbody tr:hover {
+    background-color: rgba(66, 133, 244, 0.08);
+}
+
+table td button {
+    margin-bottom: 3px; /* Space if buttons wrap */
+    white-space: nowrap; /* Prevent button text wrap */
+}
+
+/* --- Mensajes de Error --- */
+.error-message {
+    color: var(--error-color);
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+    background-color: rgba(217, 48, 37, 0.05);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--error-color);
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f1f3f4;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Estilos para la sección de disponibilidad detallada (specialists.html) --- */
+.availability-details {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-top: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.availability-details legend {
+    font-weight: 500; /* Changed from 600 */
+    margin-bottom: 15px;
+    color: var(--primary-color); /* Changed from dark */
+    font-size: 1.1em;
+    padding: 0 5px; /* Reduced padding */
+    background: none; /* No background needed */
+}
+
+.day-availability {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    transition: all var(--transition-speed) ease;
+    padding: 5px 0; /* Add some vertical padding */
+}
+
+.day-availability:not(:last-child) {
+     border-bottom: 1px dotted #eee; /* Separator between days */
+}
+
+.day-availability:hover {
+    background-color: rgba(66, 133, 244, 0.05);
+    border-radius: var(--border-radius);
+    padding: 5px 8px; /* Adjust padding on hover */
+    margin-left: -8px; /* Counteract padding */
+    margin-right: -8px;
+}
+
+.day-availability label {
+    flex-basis: 90px; /* Slightly less base width */
+    flex-shrink: 0; /* Prevent shrinking */
+    text-align: right;
+    margin-right: 8px;
+    font-weight: normal;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
+.day-availability input[type="time"] {
+    padding: 8px 10px;
+    width: auto; /* Allow shrinking/growing */
+    flex-grow: 1;
+    max-width: 120px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    font-size: 0.95em; /* Match other inputs */
+}
+
+.day-availability input[type="time"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-light);
+    outline: none;
+}
+
+.day-availability span {
+    padding: 0 5px; /* Reduced padding */
+    color: var(--text-secondary);
+}
+
+.day-availability small {
+    font-size: 0.8em;
+    color: #777;
+    margin-left: 10px;
+    flex-basis: 100%; /* Ensure hint goes to new line on wrap */
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* --- ESTILOS REVERTIDOS/SIMPLIFICADOS PARA SERVICIOS EN CLIENTES --- */
+.service-options fieldset {
+    /* Inherits general fieldset style */
+    background-color: #f9f9f9; /* Light background for this specific section */
+}
+
+.service-options legend {
+    /* Inherits general legend style */
+}
+
+/* Grid for Service Checkboxes */
+.service-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 5px 15px; /* Reduced vertical gap, keep horizontal */
+    margin-top: 10px;
+}
+
+/* Styling for the label containing the checkbox */
+.service-item-original label { /* Used original class from reverted HTML */
+    font-weight: normal; /* Standard weight */
+    display: inline-flex; /* Align checkbox and label */
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 8px; /* Space below each item */
+    cursor: pointer;
+    padding: 5px 0; /* Add padding for hover effect */
+    transition: color 0.2s ease;
+}
+.service-item-original label:hover {
+     color: var(--primary-color);
+}
+
+.service-item-original input[type="checkbox"] {
+    margin-right: 8px; /* Space between checkbox and text */
+     width: 16px;
+     height: 16px;
+     accent-color: var(--primary-color);
+     cursor: pointer;
+}
+/* --- FIN ESTILOS SERVICIOS CLIENTES (REVERTIDO) --- */
+
+
+/* --- Estilos Menú Hamburguesa --- */
+.menu-toggle {
+    display: none; /* Oculto por defecto */
+    background: none; border: none; color: white; font-size: 1.8em;
+    cursor: pointer; padding: 5px 10px; margin-left: 15px; line-height: 1;
+    order: 3; /* Ensure it's last in the flex row on mobile */
+}
+
+@media (max-width: 991px) { /* Breakpoint for hamburger menu */
+    .menu-toggle { display: block; }
+    header {
+        position: relative;
+        justify-content: space-between;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+    }
+     header h1 {
+        flex-grow: 0 !important;
+        margin-right: auto;
+        margin-bottom: 0;
+    }
+
+    header nav#main-navigation {
+        display: none;
+        flex-direction: column; position: absolute;
+        top: 100%; right: 0; background-color: var(--primary-dark);
+        width: 250px; max-width: 80%;
+        box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.2);
+        padding: 10px 0; z-index: 1000; border-radius: 0 0 0 var(--border-radius);
+        gap: 0; align-items: stretch;
+    }
+    header nav#main-navigation.nav-active { display: flex; }
+
+    header nav#main-navigation a, header nav#main-navigation button#logout-button {
+        display: block; color: white; padding: 12px 20px; text-decoration: none;
+        border: none; background: none; width: 100%; text-align: left; margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0;
+    }
+    header nav#main-navigation a:last-child, header nav#main-navigation button#logout-button { border-bottom: none; }
+    header nav#main-navigation a:hover, header nav#main-navigation button#logout-button:hover { background-color: rgba(255, 255, 255, 0.1); }
+    header nav#main-navigation a i, header nav#main-navigation button#logout-button i { margin-right: 10px; width: 20px; text-align: center; }
+}
+/* --- FIN Estilos Menú Hamburguesa --- */
+
+
+/* --- Responsividad General --- */
+@media (max-width: 768px) {
+    header h1 { font-size: 1.5em; }
+
+    main { padding: 15px; }
+    .dashboard-stats { grid-template-columns: 1fr; gap: 20px; } /* Dashboard specific, keep if needed */
+    .chart-container { padding: 15px; } /* Dashboard specific, keep if needed */
+    .form-actions { flex-direction: column; gap: 10px; }
+    .form-actions button { width: 100%; }
+
+    /* Availability section on mobile */
+    .day-availability {
+        flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;
+        padding-bottom: 10px; border-bottom: 1px dashed var(--border-color);
+    }
+    .day-availability label { text-align: left; margin-bottom: 5px; width: 100%; }
+    .day-availability input[type="time"] { max-width: 100%; width: 100%; }
+    .day-availability span { display: none; } /* Hide separator */
+    .day-availability small { text-align: left; padding-left: 0; }
+}
+
+@media (max-width: 480px) {
+    header h1 { font-size: 1.3em; }
+    header h1 a[href="index.html"] { font-size: 0.7em !important; padding: 5px 10px !important;} /* Smaller button */
+    header h1 a[href="index.html"] i { font-size: 0.9em !important; margin-right: 5px !important;}
+
+    table th, table td { font-size: 0.85em; }
+    button { padding: 10px 18px; font-size: 0.95em;} /* Smaller buttons */
+    .button-edit, .button-delete { padding: 6px 12px; font-size: 0.85em;}
+
+    fieldset { padding: 15px; }
+    fieldset legend { font-size: 1em;}
+}
+
+
+/* --- CSS para Tablas Responsivas (Estilo Tarjeta en Móvil) --- */
+@media screen and (max-width: 767px) {
+    .table-responsive thead { display: none; } /* Hide header */
+    .table-responsive tr {
+        display: block; margin-bottom: 1.5em; border: 1px solid var(--border-color);
+        border-radius: var(--border-radius); box-shadow: var(--box-shadow);
+        background-color: var(--card-background); padding: 15px; /* More padding */
+    }
+     .table-responsive tr td {
+        border: none; border-bottom: 1px solid #eee; display: block;
+        text-align: right; padding-left: 45% !important; /* Ensure space for label */
+        position: relative; font-size: 0.95em;
+        padding-top: 10px !important; padding-bottom: 10px !important; /* More padding */
+        word-wrap: break-word; overflow-wrap: break-word; white-space: normal !important; /* Force wrap */
+     }
+     .table-responsive td:before {
+        content: attr(data-label); position: absolute; left: 15px; /* Adjust position */
+        width: 40%; padding-right: 10px; white-space: nowrap;
+        text-align: left; font-weight: bold; color: var(--primary-dark);
+        font-size: 0.9em; /* Slightly smaller label */
+     }
+     .table-responsive td:last-child { border-bottom: 0; }
+     /* Actions Cell */
+     .table-responsive td[data-label="Acciones"] { /* Target actions cell */
+         text-align: right !important; /* Align buttons right */
+         padding-left: 15px !important; /* Reset padding */
+         padding-top: 15px !important;
+         border-bottom: none; /* No border for actions */
+     }
+     .table-responsive td[data-label="Acciones"]:before {
+        content: ""; /* Hide pseudo-label for actions */
+     }
+     .table-responsive td[data-label="Acciones"] button {
+        margin: 5px 0 5px 5px; display: inline-block; width: auto;
+        font-size: 0.85em; /* Smaller buttons on mobile card */
+        padding: 6px 12px;
+     }
+}
+/* --- FIN CSS Tablas Responsivas --- */

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programar Citas Múltiples (Firebase)</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS de Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+
+    <style>
+        /* Estilos para la nueva interfaz */
+        #session-info {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        #slots-container {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+            /* Espacio para scrollbar */
+        }
+
+        #slots-container .slot-entry {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid #eee;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            background-color: #fdfdfd;
+        }
+
+        #slots-container .slot-entry label {
+            margin-bottom: 0;
+            flex-shrink: 0;
+            /* Evitar que se encojan */
+        }
+
+        #slots-container .slot-entry input[type="date"],
+        #slots-container .slot-entry input[type="time"] {
+            width: auto;
+            flex-grow: 1;
+            max-width: 150px;
+            padding: 6px 8px;
+            font-size: 0.95em;
+        }
+
+        /* Estilo para el botón de eliminar slot */
+        #slots-container .slot-entry button.remove-slot-button {
+            padding: 4px 8px;
+            font-size: 0.9em;
+            line-height: 1;
+            background-color: #fdd;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            flex-shrink: 0;
+        }
+
+        #slots-container .slot-entry button.remove-slot-button:hover {
+            background-color: #fcc;
+        }
+
+        #slots-container>p {
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Mensaje inicial */
+        small#service-duration-info {
+            color: #555;
+            display: inline-block;
+            margin-left: 5px;
+        }
+    </style>
+
+    <!-- Scripts de Librerías en Head con defer -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+    <!-- Opcional: Archivo de idioma español para Flatpickr -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- SDK EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+        defer></script>
+    <!-- SDKs Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+
+</head>
+
+<body>
+    <header>
+        <h1 style="margin: 0;">
+            <a href="index.html" style="
+              display: inline-flex;
+              align-items: center;
+              background-color: #007BFF;
+              color: white;
+              font-weight: 600;
+              text-decoration: none;
+              padding: 8px 16px;
+              border-radius: 6px;
+              font-size: 1.2em;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+              transition: background-color 0.3s;
+            " onmouseover="this.style.backgroundColor='#0056b3';" onmouseout="this.style.backgroundColor='#007BFF';">
+                <i class="fas fa-arrow-left" style="margin-right: 8px; font-size: 1em;"></i>
+                Regresar Inicio
+            </a>
+        </h1>
+
+        <!-- Botón Hamburguesa (visible solo en móvil) -->
+        <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+        </button>
+
+        <!-- Contenedor de Navegación Principal -->
+        <nav id="main-navigation">
+            <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+            <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+            <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+            <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+
+
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-section card">
+            <h2 id="form-title">Programar Sesiones para Cliente</h2>
+            <form id="appointment-form">
+                <!-- Paso 1: Seleccionar Cliente, Especialista, Servicio -->
+                <fieldset>
+                    <legend>Información Básica</legend>
+                    <div class="form-group">
+                        <label for="client-id">Cliente:</label>
+                        <select id="client-id" required>
+                            <option value="">Cargando clientes...</option>
+                        </select>
+                        <div id="session-info">Sesiones disponibles: N/A</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist-id">Especialista:</label>
+                        <select id="specialist-id" required>
+                            <option value="">Seleccionar especialista...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-id">Servicio:</label>
+                        <select id="service-id" required>
+                            <option value="">Seleccionar servicio...</option>
+                        </select>
+                        <small id="service-duration-info"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notas Generales (Opcional):</label>
+                        <!-- Quitamos 'required' de las notas -->
+                        <textarea id="notes"
+                            placeholder="Notas aplicables a todas las sesiones programadas (Ej: Materia, temas,modalidad, etc...)"></textarea>
+                    </div>
+                </fieldset> <!-- End of Información Básica fieldset -->
+
+                <!-- PAYMENT FIELDSET ADDED HERE -->
+                <fieldset>
+                    <legend>Información de Pago (Actualizar Cliente)</legend>
+                    <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">Esta información actualizará los
+                        datos del cliente seleccionado.</p>
+                    <div class="form-group">
+                        <label for="payment-method">Método de Pago Preferido:</label>
+                        <select id="payment-method">
+                            <option value="">Seleccionar...</option>
+                            <option value="transferencia">ATH Móvil</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="paypal">Paypal</option>
+                            <option value="otro">Transferencia Bancaria</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-amount">Cantidad de Pago (USD, si aplica):</label>
+                        <input type="number" step="0.01" id="payment-amount" placeholder="Ej: 500.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="session-count">Cantidad de Sesiones Pagadas (si aplica):</label>
+                        <input type="number" id="session-count" placeholder="Ej: 10">
+                    </div>
+                </fieldset>
+                <!-- END Payment Info -->
+
+                <!-- Paso 2: Añadir Fechas y Horas -->
+                <fieldset>
+                    <legend>Seleccionar Fechas y Horas de Sesión</legend>
+                    <div id="slots-container">
+                        <p>Seleccione cliente, especialista y servicio para añadir horarios.</p>
+                    </div>
+                    <button type="button" id="add-slot-button" class="button-secondary" disabled>+ Añadir
+                        Horario</button>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit" id="save-button" class="button-primary" disabled>Guardar Todas las
+                        Citas</button>
+                    <!-- El botón Cancelar para edición no se usa en este flujo -->
+                    <!-- <button type="button" id="cancel-button" class="button-secondary" style="display: none;">Cancelar Edición</button> -->
+                </div>
+            </form>
+        </section>
+
+        <section class="table-section card">
+            <h2>Lista de Citas Programadas</h2>
+            <div class="table-container">
+                <!-- Table with original columns (no payment info here) -->
+                <table id="appointments-table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID Cita</th>
+                            <th>Cliente</th>
+                            <th>Especialista</th>
+                            <th>Servicio</th>
+                            <th>Fecha/Hora</th>
+                            <th>Notas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7">Cargando citas...</td> <!-- Colspan remains 7 -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Pie de página si tienes -->
+    </footer>
+
+    <!-- Scripts propios y de configuración al final del body -->
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/appointments-firebase-multi.js" defer></script> <!-- JS updated below -->
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Gestor de Citas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+</head>
+
+<body>
+    <header>
+        <h1 style="margin: 0;">
+            <a href="index.html" style="
+              display: inline-flex; 
+              align-items: center; 
+              background-color: #007BFF; 
+              color: white; 
+              font-weight: 600; 
+              text-decoration: none; 
+              padding: 8px 16px; 
+              border-radius: 6px; 
+              font-size: 1.2em;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+              transition: background-color 0.3s;
+            " onmouseover="this.style.backgroundColor='#0056b3';" onmouseout="this.style.backgroundColor='#007BFF';">
+                <i class="fas fa-arrow-left" style="margin-right: 8px; font-size: 1em;"></i>
+                Regresar Inicio
+            </a>
+        </h1>
+    
+        <!-- Botón Hamburguesa (visible solo en móvil) -->
+        <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+        </button>
+    
+        <!-- Contenedor de Navegación Principal -->
+        <nav id="main-navigation">
+            <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+            <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+            <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+            <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+           
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-section card">
+            <h2 id="form-title">Agregar Servicio</h2>
+            <form id="service-form">
+                <input type="hidden" id="service-id"> <!-- Para editar -->
+                <div class="form-group">
+                    <label for="service-name">Nombre del Servicio:</label>
+                    <input type="text" id="service-name" placeholder="Ej: Evaluación Inicial" required>
+                </div>
+                <div class="form-group">
+                    <label for="service-description">Descripción (Opcional):</label>
+                    <textarea id="service-description" placeholder="Breve descripción del servicio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-duration">Duración (minutos, Opcional):</label>
+                    <input type="number" id="service-duration" placeholder="Ej: 60">
+                </div>
+                <div class="form-group">
+                    <label for="service-price">Precio (Opcional):</label>
+                    <input type="number" step="0.01" id="service-price" placeholder="Ej: 50.00">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="save-button" class="button-primary">Guardar</button>
+                    <button type="button" id="cancel-button" class="button-secondary" style="display: none;">Cancelar
+                        Edición</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="table-section card">
+            <h2>Lista de Servicios</h2>
+            <div class="table-container">
+            <table id="services-table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Duración (min)</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se cargarán aquí -->
+                        <tr>
+                            <td colspan="6">Cargando servicios...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    
+    <script src="js/auth.js"></script> <!-- Para proteger la página y logout -->
+    <!-- ASEGÚRATE DE TENER ESTAS LÍNEAS AL FINAL DEL BODY -->
+    <!-- 1. SDKs de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+    
+    <!-- 2. Tu configuración de Firebase -->
+    <script src="js/firebase-config.js" defer></script>
+    
+    <!-- 3. El NUEVO script para Servicios con Firebase -->
+    <script src="js/services-firebase.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+</body>
+
+</html>

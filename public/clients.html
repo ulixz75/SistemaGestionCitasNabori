@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- Firebase SDKs al final del body -->
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+    <style>
+        /* Estilos específicos para clientes (pueden estar en styles.css también) */
+        .service-options fieldset {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            /* Light background for fieldset */
+        }
+
+        .service-options legend {
+            font-weight: 600;
+            /* Bolder legend */
+            padding: 0 10px;
+            color: var(--primary-dark);
+            /* Use theme color */
+            font-size: 1.1em;
+        }
+
+        /* Grid container for services */
+        .service-grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* Each item takes full width */
+            gap: 5px;
+            /* Gap between items */
+            margin-top: 10px;
+        }
+
+        /* Individual Service Item Styling */
+        .service-item-original {
+            display: flex;
+            justify-content: space-between;
+            /* Space between main label and options */
+            align-items: center;
+            padding: 8px 5px;
+            border-bottom: 1px dashed #eee;
+            flex-wrap: wrap;
+            /* Allow wrap on small screens */
+        }
+
+        .service-item-original:last-child {
+            border-bottom: none;
+        }
+
+        /* Main service label (including checkbox) */
+        .service-item-original>label:first-of-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            cursor: pointer;
+            margin-right: 15px;
+            /* Space before modality options */
+        }
+
+        .service-item-original>label:first-of-type input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            /* Make checkbox itself clickable */
+        }
+
+        /* Container for R/P checkboxes */
+        .service-item-original .modality-options {
+            display: flex;
+            gap: 15px;
+            /* Space between R and P labels */
+            align-items: center;
+        }
+
+        /* Label for R/P */
+        .service-item-original .modality-options label {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9em;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .service-item-original .modality-options input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--secondary-color);
+            /* Different accent color for modality */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 style="margin: 0;">
+            <a href="index.html" style="
+          display: inline-flex;
+          align-items: center;
+          background-color: #007BFF;
+          color: white;
+          font-weight: 600;
+          text-decoration: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 1.2em;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          transition: background-color 0.3s;
+        " onmouseover="this.style.backgroundColor='#0056b3';" onmouseout="this.style.backgroundColor='#007BFF';">
+                <i class="fas fa-arrow-left" style="margin-right: 8px; font-size: 1em;"></i>
+                Regresar Inicio
+            </a>
+        </h1>
+
+        <!-- Botón Hamburguesa (visible solo en móvil) -->
+        <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+        </button>
+
+        <!-- Contenedor de Navegación Principal -->
+        <nav id="main-navigation">
+            <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+            <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+            <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+            <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-section card">
+            <h2 id="form-title">Agregar Cliente</h2>
+            <form id="client-form">
+                <input type="hidden" id="client-id"> <!-- Para editar -->
+
+                <!-- Datos Personales -->
+                <fieldset>
+                    <legend>Información Personal</legend>
+                    <div class="form-group">
+                        <label for="full-name">Nombre Completo Cliente/Padre:</label>
+                        <input type="text" id="full-name" placeholder="Nombre Apellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-name">Nombre del Estudiante (Opcional):</label>
+                        <input type="text" id="student-name" placeholder="Si aplica">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono:</label>
+                        <input type="tel" id="phone" placeholder="Ej: +1234567890" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="cliente@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Dirección (Opcional):</label>
+                        <input type="text" id="address" placeholder="Calle Falsa 123, Comuna">
+                    </div>
+                </fieldset>
+
+                <!-- Detalles del Servicio con Modalidad -->
+                <fieldset class="service-options">
+                    <legend>Servicios Requeridos y Modalidad</legend>
+                    <div class="form-group">
+                        <label for="subject">Materia(s) (Opcional):</label>
+                        <input type="text" id="subject" placeholder="Ej: Matemáticas, Lectura">
+                    </div>
+
+                    <!-- Container for services using CSS Grid (or just stack vertically) -->
+                    <div class="form-group service-grid-container">
+                        <!-- General label removed, implicit from legend -->
+
+                        <!-- Tutorías -->
+                        <div class="service-item-original">
+                            <label for="service-tutorias">
+                                <input type="checkbox" id="service-tutorias" name="service_type" value="tutorias">
+                                Tutorías
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-tutorias-remote">
+                                    <input type="checkbox" id="service-tutorias-remote" name="service_modality_tutorias"
+                                        value="remoto"> R
+                                </label>
+                                <label for="service-tutorias-presencial">
+                                    <input type="checkbox" id="service-tutorias-presencial"
+                                        name="service_modality_tutorias" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Terapia Educativa -->
+                        <div class="service-item-original">
+                            <label for="service-terapia_educativa">
+                                <input type="checkbox" id="service-terapia_educativa" name="service_type"
+                                    value="terapia_educativa">
+                                Terapia Educativa
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-terapia_educativa-remote">
+                                    <input type="checkbox" id="service-terapia_educativa-remote"
+                                        name="service_modality_terapia_educativa" value="remoto"> R
+                                </label>
+                                <label for="service-terapia_educativa-presencial">
+                                    <input type="checkbox" id="service-terapia_educativa-presencial"
+                                        name="service_modality_terapia_educativa" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Homeschooling -->
+                        <div class="service-item-original">
+                            <label for="service-homeschooling">
+                                <input type="checkbox" id="service-homeschooling" name="service_type"
+                                    value="homeschooling">
+                                Homeschooling
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-homeschooling-remote">
+                                    <input type="checkbox" id="service-homeschooling-remote"
+                                        name="service_modality_homeschooling" value="remoto"> R
+                                </label>
+                                <label for="service-homeschooling-presencial">
+                                    <input type="checkbox" id="service-homeschooling-presencial"
+                                        name="service_modality_homeschooling" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Terapia del Habla -->
+                        <div class="service-item-original">
+                            <label for="service-terapia_habla">
+                                <input type="checkbox" id="service-terapia_habla" name="service_type"
+                                    value="terapia_habla">
+                                Terapia del Habla
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-terapia_habla-remote">
+                                    <input type="checkbox" id="service-terapia_habla-remote"
+                                        name="service_modality_terapia_habla" value="remoto"> R
+                                </label>
+                                <label for="service-terapia_habla-presencial">
+                                    <input type="checkbox" id="service-terapia_habla-presencial"
+                                        name="service_modality_terapia_habla" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Evaluación del Habla -->
+                        <div class="service-item-original">
+                            <label for="service-evaluacion_habla">
+                                <input type="checkbox" id="service-evaluacion_habla" name="service_type"
+                                    value="evaluacion_habla">
+                                Evaluación del Habla
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-evaluacion_habla-remote">
+                                    <input type="checkbox" id="service-evaluacion_habla-remote"
+                                        name="service_modality_evaluacion_habla" value="remoto"> R
+                                </label>
+                                <label for="service-evaluacion_habla-presencial">
+                                    <input type="checkbox" id="service-evaluacion_habla-presencial"
+                                        name="service_modality_evaluacion_habla" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Repaso College Board -->
+                        <div class="service-item-original">
+                            <label for="service-repaso_college_board">
+                                <input type="checkbox" id="service-repaso_college_board" name="service_type"
+                                    value="repaso_college_board">
+                                Repaso College Board
+                            </label>
+                            <div class="modality-options">
+                                <label for="service-repaso_college_board-remote">
+                                    <input type="checkbox" id="service-repaso_college_board-remote"
+                                        name="service_modality_repaso_college_board" value="remoto"> R
+                                </label>
+                                <label for="service-repaso_college_board-presencial">
+                                    <input type="checkbox" id="service-repaso_college_board-presencial"
+                                        name="service_modality_repaso_college_board" value="presencial"> P
+                                </label>
+                            </div>
+                        </div>
+
+                    </div> <!-- Fin del service-grid-container -->
+                </fieldset>
+
+                <!-- Información de Pago MOVED TO appointments.html -->
+
+
+                <div class="form-actions">
+                    <button type="submit" id="save-button" class="button-primary">Guardar Cliente</button>
+                    <button type="button" id="cancel-button" class="button-secondary" style="display: none;">Cancelar
+                        Edición</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="table-section card">
+            <h2>Lista de Clientes</h2>
+            <div class="table-container">
+                <!-- Table headers updated (Payment removed) -->
+                <table id="clients-table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Estudiante</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Servicios (Modalidad)</th> <!-- Updated services column -->
+                            <!-- Payment column removed -->
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se cargarán aquí -->
+                        <tr>
+                            <td colspan="7">Cargando clientes...</td> <!-- Colspan updated to 7 -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/clients-firebase.js" defer></script> <!-- JS updated below -->
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+
+</body>
+
+</html>

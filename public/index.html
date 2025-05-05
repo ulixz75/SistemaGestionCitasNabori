@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NABORI Corp Reservas</title>
+    <!-- Fuentes y Iconos -->
+    <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Asegúrate que esta versión es la que quieres -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- Librerías JS (diferidas en head) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- SDKs Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js" defer></script>
+    <!-- Quitamos firebase-auth-compat.js porque dijimos que no usaríamos auth interna -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js" defer></script> -->
+    <!-- ... tus otros metas y links ... -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Opcional: Color para la barra de estado en móviles -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- ... -->
+
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-tachometer-alt"></i> Panel de Administrador</h1>
+    
+        <!-- Botón Hamburguesa (visible solo en móvil) -->
+        <button class="menu-toggle" id="menu-toggle-button" aria-label="Abrir menú" aria-expanded="false">
+            <i class="fas fa-bars"></i> <!-- Icono de hamburguesa -->
+        </button>
+    
+        <!-- Contenedor de Navegación Principal -->
+        <nav id="main-navigation">
+            
+            <a href="specialists.html"><i class="fas fa-user-doctor"></i> Especialistas</a>
+            <a href="clients.html"><i class="fas fa-users"></i> Clientes</a>
+            <a href="services.html"><i class="fas fa-briefcase"></i> Servicios</a>
+            <a href="appointments.html"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendario</a>
+           
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============================================= -->
+        <!-- == SECCIÓN DE TARJETAS DE RESUMEN UNIFICADA == -->
+        <!-- ============================================= -->
+        <section class="stat-cards">
+            <!-- Tarjeta 1: Clientes Totales -->
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div class="stat-info">
+                    <h3>Clientes Totales</h3>
+                    <p id="total-clients-stat">...</p> <!-- ID para JS -->
+                </div>
+            </div>
+
+            <!-- Tarjeta 2: Citas Próximas -->
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-info">
+                    <h3>Citas Próximas (7 días)</h3>
+                    <p id="upcoming-appointments-stat">...</p> <!-- ID para JS -->
+                </div>
+            </div>
+
+            <!-- Tarjeta 3: Especialistas -->
+            <div class="stat-card">
+                <i class="fas fa-user-doctor"></i> <!-- Icono corregido -->
+                <div class="stat-info">
+                    <h3>Especialistas</h3>
+                    <p id="total-specialists-stat">...</p> <!-- ID para JS -->
+                </div>
+            </div>
+
+            <!-- Tarjeta 4: Servicios -->
+            <div class="stat-card">
+                <i class="fas fa-concierge-bell"></i> <!-- Icono cambiado para variedad -->
+                <div class="stat-info">
+                    <h3>Servicios</h3>
+                    <p id="total-services-stat">...</p> <!-- ID para JS -->
+                </div>
+            </div>
+        </section>
+        <!-- ============================================= -->
+        <!-- ===== FIN SECCIÓN TARJETAS DE RESUMEN ===== -->
+        <!-- ============================================= -->
+
+
+        <!-- ========================================== -->
+        <!-- == SECCIÓN DE GRÁFICOS                == -->
+        <!-- ========================================== -->
+        <!-- La clase 'card' es opcional aquí si dashboard-charts ya tiene estilos -->
+        <section class="dashboard-charts card">
+            
+            <div class="chart-container">
+                <h3>Servicios Más Solicitados</h3>
+                <canvas id="service-chart"></canvas>
+                <p id="service-chart-error" class="error-message" style="display: none;">Cargando datos...</p>
+            </div>
+            <div class="chart-container">
+                <h3>Citas por Especialista</h3>
+                <canvas id="specialist-chart"></canvas>
+                <p id="specialist-chart-error" class="error-message" style="display: none;">Cargando datos...</p>
+            </div>
+        </section>
+        <!-- ========================================== -->
+        <!-- ======= FIN SECCIÓN DE GRÁFICOS ======== -->
+        <!-- ========================================== -->
+
+
+        <!-- ============================================== -->
+        <!-- == SECCIÓN ACTIVIDAD RECIENTE UNIFICADA == -->
+        <!-- ============================================== -->
+        <section class="recent-activity card">
+            <h2><i class="fas fa-history"></i> Actividad Reciente (Últimas 5 Citas Próximas)</h2>
+            <div class="table-container">
+                <!-- Aplicar clase responsive para adaptar en móvil -->
+                <table id="recent-appointments-table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Fecha/Hora</th>
+                            <th>Cliente</th>
+                            <th>Especialista</th>
+                            <th>Servicio</th>
+                            <!-- Quitamos Estado por ahora, se puede añadir si se implementa -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- Ajusta colspan al número de columnas (4) -->
+                            <td colspan="4" class="text-center">Cargando actividad reciente...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- ============================================== -->
+        <!-- ===== FIN SECCIÓN ACTIVIDAD RECIENTE ===== -->
+        <!-- ============================================== -->
+
+    </main> <!-- Solo una etiqueta de cierre </main> -->
+
+    <footer>
+        <p>© 2024 NABORI Corp - Panel de Administración</p> <!-- Año actualizado -->
+    </footer>
+
+    <!-- Scripts al Final del Body (ORDEN IMPORTANTE) -->
+    <!-- 1. Config Firebase -->
+    <script src="js/firebase-config.js" defer></script>
+    <!-- 2. Auth (Logout) -->
+    <script src="js/auth.js" defer></script> <!-- Asegúrate que este script exista y haga lo necesario -->
+    <!-- 3. Dashboard Lógica -->
+    <script src="js/dashboard-firebase.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/pwa-installer.js" defer></script>
+
+</body>
+
+</html>

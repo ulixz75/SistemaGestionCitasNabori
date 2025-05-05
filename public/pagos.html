@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMind Rx - Bienestar Mental y Físico</title>
+    <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="G23RUL64BXYYG"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #27ae60;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --accent: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #219653;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .features {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .pricing {
+            padding: 5rem 0;
+            background-color: #f1f5f9;
+        }
+
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .pricing-features {
+            padding: 2rem;
+        }
+
+        .pricing-features ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .pricing-footer {
+            padding: 0 2rem 2rem;
+            text-align: center;
+        }
+
+        .checkout {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .checkout-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .checkout-header {
+            margin-bottom: 2rem;
+        }
+
+        #paypal-container-79WRPZQFAU6KE {
+            margin-top: 2rem;
+        }
+
+        .testimonials {
+            padding: 5rem 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: #bbb;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem 0;
+                gap: 1rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 10;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <h1>Fit<span>Mind</span>Rx</h1>
+            </a>
+            <button class="mobile-menu">☰</button>
+            <ul class="nav-menu">
+                <li><a href="#features">Características</a></li>
+                <li><a href="#pricing">Precios</a></li>
+                <li><a href="#testimonials">Testimonios</a></li>
+                <li><a href="#checkout" class="btn btn-primary">Comprar</a></li>
+            </ul>
+        </div>
+        <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+        <script>
+            cartPaypal.Cart({ id: "pp-view-cart" })
+        </script>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Transforma tu mente y cuerpo con FitMind Rx</h2>
+            <p>Descubre el equilibrio perfecto entre bienestar mental y físico con nuestro enfoque revolucionario.</p>
+            <a href="#checkout" class="btn btn-primary">Comenzar ahora</a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestras Características</h2>
+                <p>Descubre por qué FitMind Rx está transformando la manera en que las personas cuidan su salud mental y
+                    física.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Entrenamiento Mental</h3>
+                    <p>Técnicas probadas científicamente para mejorar la concentración, reducir el estrés y aumentar la
+                        claridad mental.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3>Fitness Personalizado</h3>
+                    <p>Rutinas adaptadas a tus objetivos específicos, nivel de condición física y preferencias
+                        personales.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Nutrición Holística</h3>
+                    <p>Planes de alimentación que nutren tanto tu cuerpo como tu mente para un rendimiento óptimo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Planes Accesibles</h2>
+                <p>Elige el plan que mejor se adapte a tus necesidades y comienza tu viaje hacia el bienestar integral.
+                </p>
+            </div>
+            <div class="pricing-plans">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plan Básico</h3>
+                        <div class="price">€29.99</div>
+                        <p>por mes</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Acceso a entrenamientos básicos</li>
+                            <li>Plan de nutrición estándar</li>
+                            <li>Técnicas de meditación iniciales</li>
+                            <li>Soporte por email</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#checkout" class="btn btn-primary">Seleccionar</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plan Premium</h3>
+                        <div class="price">€49.99</div>
+                        <p>por mes</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Acceso a todos los entrenamientos</li>
+                            <li>Plan de nutrición personalizado</li>
+                            <li>Biblioteca completa de meditaciones</li>
+                            <li>Soporte prioritario 24/7</li>
+                            <li>Sesiones de coaching mensuales</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#checkout" class="btn btn-primary">Seleccionar</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plan Familiar</h3>
+                        <div class="price">€89.99</div>
+                        <p>por mes</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li>Acceso para hasta 5 miembros</li>
+                            <li>Planes personalizados para cada uno</li>
+                            <li>Contenido para todas las edades</li>
+                            <li>Soporte prioritario 24/7</li>
+                            <li>Sesiones de coaching semanales</li>
+                            <li>Descuentos en productos asociados</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#checkout" class="btn btn-primary">Seleccionar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout" class="checkout">
+        <div class="container">
+            <div class="section-title">
+                <h2>Completa tu Compra</h2>
+                <p>Estás a un paso de transformar tu bienestar mental y físico</p>
+            </div>
+            <div class="checkout-container">
+                
+                <!-- Contenedor de PayPal -->
+                
+                <paypal-add-to-cart-button data-id="SP5DM3GXZNA62"></paypal-add-to-cart-button>
+                <script>
+                    cartPaypal.AddToCart({ id: "SP5DM3GXZNA62" })
+                </script>
+               
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que Dicen Nuestros Usuarios</h2>
+                <p>Historias reales de personas que han transformado su vida con FitMind Rx</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"FitMind Rx ha cambiado completamente mi relación con el ejercicio y la
+                        meditación. Ahora tengo más energía, duermo mejor y me siento más concentrado en mi trabajo."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="/api/placeholder/50/50" alt="Carlos Méndez">
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Méndez</h4>
+                            <p>Ingeniero, 35 años</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Después de probar muchos programas diferentes, finalmente encontré uno
+                        que aborda tanto la salud mental como física. Los resultados han sido sorprendentes en solo 3
+                        meses."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="/api/placeholder/50/50" alt="Laura Fernández">
+                        </div>
+                        <div class="author-info">
+                            <h4>Laura Fernández</h4>
+                            <p>Profesora, 42 años</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"El enfoque holístico de FitMind Rx es justo lo que necesitaba. No solo
+                        he perdido peso, sino que mi ansiedad ha disminuido significativamente."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="/api/placeholder/50/50" alt="Miguel Torres">
+                        </div>
+                        <div class="author-info">
+                            <h4>Miguel Torres</h4>
+                            <p>Diseñador, 29 años</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FitMind Rx</h3>
+                    <p>Transformando vidas a través del equilibrio perfecto entre mente y cuerpo.</p>
+                    <div class="social-links">
+                        <a href="#"><span>f</span></a>
+                        <a href="#"><span>t</span></a>
+                        <a href="#"><span>in</span></a>
+                        <a href="#"><span>ig</span></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="#pricing">Precios</a></li>
+                        <li><a href="#testimonials">Testimonios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@fitmindrx.com">info@fitmindrx.com</a></li>
+                        <li><a href="tel:+34912345678">+34 912 345 678</a></li>
+                        <li><a href="#">Formulario de Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FitMind Rx. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script para el menú móvil
+        const mobileMenuBtn = document.querySelector('.mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll suave para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Asegurarse de que PayPal se inicialice correctamente después de que la página haya cargado
+        window.addEventListener('load', function () {
+            // Inicializar PayPal después de un breve retraso para asegurarse de que el SDK esté cargado
+            setTimeout(function () {
+                if (typeof paypal !== 'undefined') {
+                    try {
+                        paypal.HostedButtons({
+                            hostedButtonId: "79WRPZQFAU6KE",
+                        }).render("#paypal-container-79WRPZQFAU6KE");
+                        console.log("PayPal buttons initialized successfully");
+                    } catch (error) {
+                        console.error("Error initializing PayPal buttons:", error);
+                        document.getElementById('fallback-button').style.display = 'block';
+                    }
+                } else {
+                    console.error("PayPal SDK not loaded");
+                    document.getElementById('fallback-button').style.display = 'block';
+
+                    // Intentar cargar el SDK de PayPal nuevamente
+                    const script = document.createElement('script');
+                    script.src = "https://www.paypal.com/sdk/js?client-id=BAAJNeyWju5MsTXUX_ncKkqYT-EOjhRMnPSJNWTtKgeR5Lyd-6TV1Yb58YJdhDLIvTjdzxMv8hFBRnisSc&components=hosted-buttons&disable-funding=venmo&currency=EUR";
+                    script.async = true;
+                    script.onload = function () {
+                        if (typeof paypal !== 'undefined') {
+                            paypal.HostedButtons({
+                                hostedButtonId: "79WRPZQFAU6KE",
+                            }).render("#paypal-container-79WRPZQFAU6KE");
+                            console.log("PayPal buttons loaded and initialized on retry");
+                            document.getElementById('fallback-button').style.display = 'none';
+                        }
+                    };
+                    document.body.appendChild(script);
+                }
+            }, 1000); // Esperamos 1 segundo para asegurarnos de que todo esté cargado
+        });
+    </script>
+</body>
+
+</html>
